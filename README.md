@@ -28,7 +28,7 @@ It is something that I missed from the original `packer`.
 -   allow searches
 -   allow updates
 
-They are <span class="underline">not planned</span> for the near future because these modifications solves
+They are **not planned** for the near future because these modifications solves
 my problems/requests. If you want to modify again or allow more options, do it or request to me ;)
 
 # Authors

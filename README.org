@@ -52,7 +52,7 @@
   - allow searches
   - allow updates
     
-  They are _not planned_ for the near future because these modifications solves
+  They are *not planned* for the near future because these modifications solves
   my problems/requests. If you want to modify again or allow more options, do it or request to me ;)
 
 * Authors
