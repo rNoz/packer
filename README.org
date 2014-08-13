@@ -1,0 +1,74 @@
+#+TITLE: README
+#+AUTHOR: Raúl Nozal
+#+OPTIONS: toc:nil
+* README
+  :PROPERTIES:
+  :ALT_TITLE: README
+  :CUSTOM_ID: README
+  :END:
+  
+* Table of contents
+  :PROPERTIES:
+  :ALT_TITLE: Table of contents
+  :CUSTOM_ID: Table of contents
+  :END:
+  
+#+BEGIN_HTML
+[TOC]
+#+END_HTML
+
+* Introduction
+  :PROPERTIES:
+  :ALT_TITLE: Introduction
+  :CUSTOM_ID: Introduction
+  :END:
+  
+  Modification of [[https://github.com/keenerd/packer][keenerd/packer]] to allow using /BitBucket/ [[https://aur.archlinux.org][AUR]]-like repo and =--force= arg 
+  =pacman='s option.
+
+* Use
+  :PROPERTIES:
+  :ALT_TITLE: Use
+  :CUSTOM_ID: Use
+  :END:
+  
+  Because I currently use =packer= (although I still keep =yaourt=) I have modified
+  the original repo to be able to use a specific git repository from /BitBucket/. 
+  It should be easy to adapt it for /Github/ API.
+
+  Currently it is only supported the install function:
+  =packer --bbrepo g4lbb:aur -S package-name=
+
+  Another feature added to this modification is the possibility to =force= the installation.
+  It is something that I missed from the original =packer=.
+  =packer --force -S package-name= or =packer --bbrepo g4lbb:aur --force -S package-name=
+
+* TODO
+  :PROPERTIES:
+  :ALT_TITLE: TODO
+  :CUSTOM_ID: TODO
+  :END:
+  - github AUR-like support (=--ghrepo= or similar)
+  - allow searches
+  - allow updates
+    
+  They are _not planned_ for the near future because these modifications solves
+  my problems/requests. If you want to modify again or allow more options, do it or request to me ;)
+
+* Authors
+  :PROPERTIES:
+  :ALT_TITLE: Authors
+  :CUSTOM_ID: Authors
+  :END:
+  Original project:
+  - Matthew Bruening <matthewbruenig@gmail.com>
+  
+  Modification:
+  - Raúl Nozal <rnoz.commits@gmail.com>
+
+* License
+  :PROPERTIES:
+  :ALT_TITLE: License
+  :CUSTOM_ID: License
+  :END:
+  GNU GPLv3

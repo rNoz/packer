@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Modified to support bitbucket own AUR repo by Raúl Nozal <rnoz.commits@gmail.com>
+
 [[ $PACMAN ]] || PACMAN="pacman"
 
 # set tmpfile stuff, clean tmpdir
@@ -26,6 +28,9 @@ pacmanconf='/etc/pacman.conf'
 
 RPCURL="https://aur.archlinux.org/rpc.php?type"
 PKGURL="https://aur.archlinux.org"
+BB_API_URL="https://bitbucket.org/api/1.0/repositories/%s/%s/"
+BB_COMMIT_ARG="changesets?limit=1"
+BB_PKG_ARG="raw/%s"
 
 if [[ -t 1 && ! $COLOR = "NO" ]]; then
   COLOR1='\e[1;39m'
@@ -63,6 +68,8 @@ usage() {
   echo '    --quiet      - only output package name for searches'
   echo '    --ignore     - takes a comma-separated list of packages to ignore'
   echo '    --noconfirm  - do not prompt for any confirmation'
+  echo '    --force      - force install, overwrite conflicting files'
+  echo '    --bbrepo a:r - use bitbucket git repo providing [account:repo]'
   echo '    --noedit     - do not prompt to edit files'
   echo '    --quickcheck - check for updates and exit'
   echo '    --auronly    - only do actions for aur'
@@ -228,14 +235,25 @@ aurbar() {
 }
 
 rpcinfo() {
-  if ! [[ -f "$tmpdir/$1.info" ]]; then
-    curl -LfGs --data-urlencode "arg=$1" "$RPCURL=info" > "$tmpdir/$1.info"
+    if ! [[ -f "$tmpdir/$1.info" ]]; then
+	if [[ $bbrepo ]]; then
+	    # could be simplified but I keep last.info to check mods
+	    curl -s $(printf "$BB_API_URL$BB_COMMIT_ARG" $account $repo) > "$tmpdir/last.info"
+	    commit=$(jshon -Q -e changesets -e 0 -e raw_node -u < "$tmpdir/last.info")
+	    curl -s $(printf "$BB_API_URL$BB_PKG_ARG/utils/central.info" $account $repo $commit) > "$tmpdir/$1.info"
+	else
+	    curl -LfGs --data-urlencode "arg=$1" "$RPCURL=info" > "$tmpdir/$1.info"	    
+	fi
   fi
 }
 
 pkglink() {
-  rpcinfo $1
-  echo "${PKGURL}$(jshon -Q -e results -e URLPath -u < "$tmpdir/$1.info")"
+    rpcinfo $1
+    if [[ $bbrepo ]]; then
+	printf "$BB_API_URL$BB_PKG_ARG$(jshon -Q -e results -e URLPath -u < "$tmpdir/$1.info")" $account $repo $commit 
+    else
+	echo "${PKGURL}$(jshon -Q -e results -e URLPath -u < "$tmpdir/$1.info")"	
+    fi
 }
 
 # downloads pkgbuild ($1), edits if $2 is set
@@ -446,7 +464,10 @@ installhandling() {
 
   # Install pacman dependencies
   if [[ $pacmandepends ]]; then
-    runasroot $PACMAN --noconfirm --asdeps -S -- "${pacmandepends[@]}" || err "Installation failed."
+    if [[ $force ]]; then
+      forcestr="--force"
+    fi
+    runasroot $PACMAN --noconfirm $forcestr --asdeps -S -- "${pacmandepends[@]}" || err "Installation failed."	  
   fi 
 
   # Install aur dependencies
@@ -525,6 +546,8 @@ while [[ $1 ]]; do
     '--quiet') quiet='1' ;;
     '--ignore') ignorearg="$2" ; PACOPTS+=("--ignore" "$2") ; shift ;;
     '--noconfirm') noconfirm='1' PACOPTS+=("--noconfirm");;
+    '--force') force='1' PACOPTS+=("--force");;
+    '--bbrepo') bbrepo='1'; account=${2%:*}; repo=${2#*:}; shift ;;
     '--noedit') noedit='1' ;;
     '--auronly') auronly='1' ;;
     '--quickcheck') quickcheck='1' ;;
@@ -537,6 +560,7 @@ while [[ $1 ]]; do
   esac
   shift
 done
+
 
 # check for new packages
 if [[ $quickcheck == 1 ]]; then
