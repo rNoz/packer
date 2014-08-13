@@ -1,12 +1,6 @@
 #+TITLE: README
 #+AUTHOR: Raúl Nozal
 #+OPTIONS: toc:nil
-* README
-  :PROPERTIES:
-  :ALT_TITLE: README
-  :CUSTOM_ID: README
-  :END:
-  
 * Table of contents						   :noexport:
   :PROPERTIES:
   :ALT_TITLE: Table of contents
@@ -25,6 +19,18 @@
   =:noexport:= because it is not supported by /Github/. =org-do-demote= to allow smaller
   headings in /Github/, and inside the /README/.
 
+  The README.org is provided to compile markdown, not to read it directly. Also, the README
+  heading is re-ordered (to catch secondary headings).
+
+  All this is to provide a minimum style, but the markdown supported by /Github/ and /BitBucket/
+  it is not the same.
+
+* README
+  :PROPERTIES:
+  :ALT_TITLE: README
+  :CUSTOM_ID: README
+  :END:
+  
 ** Introduction
    :PROPERTIES:
    :ALT_TITLE: Introduction
