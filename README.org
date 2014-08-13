@@ -7,7 +7,7 @@
   :CUSTOM_ID: README
   :END:
   
-* Table of contents
+* Table of contents						   :noexport:
   :PROPERTIES:
   :ALT_TITLE: Table of contents
   :CUSTOM_ID: Table of contents
@@ -17,58 +17,71 @@
 [TOC]
 #+END_HTML
 
-* Introduction
+* Notes								   :noexport:
   :PROPERTIES:
-  :ALT_TITLE: Introduction
-  :CUSTOM_ID: Introduction
+  :ALT_TITLE: Notes
+  :CUSTOM_ID: Notes
   :END:
-  
-  Modification of [[https://github.com/keenerd/packer][keenerd/packer]] to allow using /BitBucket/ [[https://aur.archlinux.org][AUR]]-like repo and =--force= arg 
-  =pacman='s option.
+  =:noexport:= because it is not supported by /Github/. =org-do-demote= to allow smaller
+  headings in /Github/, and inside the /README/.
 
-* Use
-  :PROPERTIES:
-  :ALT_TITLE: Use
-  :CUSTOM_ID: Use
-  :END:
-  
-  Because I currently use =packer= (although I still keep =yaourt=) I have modified
-  the original repo to be able to use a specific git repository from /BitBucket/. 
-  It should be easy to adapt it for /Github/ API.
+** Introduction
+   :PROPERTIES:
+   :ALT_TITLE: Introduction
+   :CUSTOM_ID: Introduction
+   :END:
+   
+   Modification of [[https://github.com/keenerd/packer][keenerd/packer]] to allow using /BitBucket/ [[https://aur.archlinux.org][AUR]]-like repo and =--force= arg for 
+   =pacman=.
 
-  Currently it is only supported the install function:
-  =packer --bbrepo g4lbb:aur -S package-name=
+** Use
+   :PROPERTIES:
+   :ALT_TITLE: Use
+   :CUSTOM_ID: Use
+   :END:
+   
+   Because I currently use =packer= (although I still keep =yaourt=) I have modified
+   the original repo to be able to use a specific git repository from /BitBucket/. 
+   It should be easy to adapt it for the /Github/ API.
 
-  Another feature added to this modification is the possibility to =force= the installation.
-  It is something that I missed from the original =packer=.
-  =packer --force -S package-name= or =packer --bbrepo g4lbb:aur --force -S package-name=
+   Currently it is only supported the install function:
+   =packer --bbrepo g4lbb:aur -S package-name=
 
-* TODO
-  :PROPERTIES:
-  :ALT_TITLE: TODO
-  :CUSTOM_ID: TODO
-  :END:
-  - github AUR-like support (=--ghrepo= or similar)
-  - allow searches
-  - allow updates
-    
-  They are *not planned* for the near future because these modifications solves
-  my problems/requests. If you want to modify again or allow more options, do it or request to me ;)
+   Another feature added to this modification is the possibility to =force= the installation.
+   It is something that I missed from the original =packer=:
+   - =packer --force -S package-name=, or
+   - =packer --bbrepo g4lbb:aur --force -S package-name=
 
-* Authors
-  :PROPERTIES:
-  :ALT_TITLE: Authors
-  :CUSTOM_ID: Authors
-  :END:
-  Original project:
-  - Matthew Bruening <matthewbruenig@gmail.com>
-  
-  Modification:
-  - Raúl Nozal <rnoz.commits@gmail.com>
+   I have used the repo [[https://bitbucket.org/g4lbb/aur][g4lbb AUR]]. With this system it is possible to create alternative
+   AUR distributed repos (public or private). So far it is not as comfortable as the real AUR,
+   but it is possible to use this alternative.
 
-* License
-  :PROPERTIES:
-  :ALT_TITLE: License
-  :CUSTOM_ID: License
-  :END:
-  GNU GPLv3
+** TODO
+   :PROPERTIES:
+   :ALT_TITLE: TODO
+   :CUSTOM_ID: TODO
+   :END:
+   - github AUR-like support (=--ghrepo= or similar)
+   - allow searches
+   - allow updates
+     
+   They are *not planned* for the near future because these modifications solves
+   my problems/requests. If you want to modify again or allow more options, do it or request to me ;)
+
+** Authors
+   :PROPERTIES:
+   :ALT_TITLE: Authors
+   :CUSTOM_ID: Authors
+   :END:
+   Original project:
+   - Matthew Bruening <matthewbruenig@gmail.com>
+   
+   Modification:
+   - Raúl Nozal <rnoz.commits@gmail.com>
+
+** License
+   :PROPERTIES:
+   :ALT_TITLE: License
+   :CUSTOM_ID: License
+   :END:
+   GNU GPLv3
